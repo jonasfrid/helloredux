@@ -1,3 +1,6 @@
+require('babel-core/register')({
+  "presets":["es2015", "react", "stage-1"]
+});
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -5,6 +8,8 @@ var logger = require('morgan');
 // PROXY
 var httpProxy = require('http-proxy');
 
+// REQUEST HANDLER FOR SERVER-SIDE rendering
+var requestHandler = require('./requestHandler.js')
 var app = express();
 
 // PROXY TO API
@@ -22,9 +27,9 @@ app.use(logger('dev'));
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('*', function(req,res){
-  res.sendFile(path.resolve(__dirname, 'public', 'index.html'))
-})
+app.set('view engine', 'ejs');
+app.use(requestHandler);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

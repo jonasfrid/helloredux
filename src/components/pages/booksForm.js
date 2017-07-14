@@ -120,7 +120,7 @@ class BooksForm extends React.Component{
                 <FormControl.Feedback/>
               </FormGroup>
               <Button
-                onClick={(!this.props.msg)?(this.handleSubmit.bind(this)):(this.resetForm())}
+                onClick={(!this.props.msg)?(this.handleSubmit.bind(this)):(this.resetForm.bind(this))}
                 bsStyle={(!this.props.style)?("primary"):(this.props.style)}>
                 {(!this.props.msg)?("Save book"):(this.props.msg)}
                 </Button>

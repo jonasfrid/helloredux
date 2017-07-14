@@ -12,7 +12,11 @@ app.use(cookieParser());
 
 // APIs
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/bookshop');
+// LOCAL DB
+// mongoose.connect('mongodb://localhost:27017/bookshop');
+
+// MONGO LAB DB
+mongoose.connect('mongodb://betareader:Runbergsvagen12!@ds139262.mlab.com:39262/betareader');
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, '# MongoDB - connection error: '));
@@ -31,7 +35,7 @@ app.post('/cart', function(req, res){
   req.session.cart = cart;
   req.session.save(function(err){
     if(err){
-      throw err;
+      console.log("# API CART", err);
     }
     res.json(req.session.cart);
   })
@@ -52,7 +56,7 @@ app.post('/books', function(req, res) {
 
   Books.create(book, function(err, books){
     if(err){
-      throw err;
+      console.log("# API CREATE BOOK", err);
     }
     res.json(books);
   });
@@ -62,7 +66,7 @@ app.post('/books', function(req, res) {
 app.get('/books', function(req, res) {
   Books.find(function(err, books){
     if(err){
-      throw err;
+      console.log("#API GET BOOKS", err);
     }
     res.json(books);
   });
@@ -74,7 +78,7 @@ app.delete('/books/:_id', function(req, res) {
 
   Books.remove(query, function(err, books){
     if(err){
-      throw err;
+      console.log("# API DELETE BOOK", err);
     }
     res.json(books);
   });
